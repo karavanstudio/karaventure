@@ -35,4 +35,11 @@ Route::controller(PlaceController::class)->group(function () {
     Route::get('/place/{place}', 'detail')->name('place');
 });
 
+Route::prefix('admin')->group(function() {
+    Route::controller(PlaceController::class)->group(function() {
+        Route::get('/place', 'index')->name('place.index');
+        Route::get('/place/create', 'create')->name('place.create');
+    });
+});
+
 require __DIR__.'/settings.php';

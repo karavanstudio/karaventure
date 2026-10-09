@@ -31,4 +31,13 @@ class PlaceController extends Controller
             'relatedPlaces' => $relatedPlaces,
         ]);
     }
+
+    // admin site
+    public function index() {
+        return Inertia::render('admin/place');
+    }
+
+    public function create() {
+        return Inertia::render('admin/places/create');
+    }
 }
