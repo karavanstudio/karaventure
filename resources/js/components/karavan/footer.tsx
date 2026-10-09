@@ -3,6 +3,8 @@ import { MapPin, Instagram, Twitter, Youtube, Mail } from "lucide-react";
 import { explore } from '@/routes';
 
 export default function Footer() {
+    const currentYear = new Date().getFullYear();
+
     return (
         <footer className="relative mt-16 border-t border-border/50 z-40">
             <div className="absolute inset-0 bg-black/40 pointer-events-none" />
@@ -50,7 +52,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="relative border-t border-border/50 py-6 text-center text-xs md:text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Karaventure.
+                © {currentYear} Karaventure oleh Karavan Studio.
             </div>
         </footer>
     )

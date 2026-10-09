@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import { motion } from 'framer-motion';
 import { Sparkles, ChevronRight, TrendingUp } from "lucide-react";
-import HeroImage from "@/assets/kp-roblox.png";
+import HeroImage from "@/assets/kp-roblox-2.png";
 import { explore } from "@/routes";
 
 const STATS = [
@@ -109,7 +109,6 @@ export default function HeroSection() {
                         alt="Hero Image"
                         className="min-h-130 w-full max-w-full sm:max-w-full md:max-w-150 lg:max-w-137.5 lg:min-w-80 xl:max-w-150 border-2 border-amber-300/60 rounded-3xl object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent" />
                 </div>
             </div>
         </div>
