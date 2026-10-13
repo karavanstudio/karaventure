@@ -20,6 +20,14 @@ Route::get('/about', function() {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+    Route::prefix('admin')->group(function() {
+        Route::controller(PlaceController::class)->group(function() {
+            Route::get('/place', 'index')->name('place.index');
+            Route::get('/place/create', 'create')->name('place.create');
+            Route::post('/place/store', 'store')->name('place.store');
+        });
+    });
 });
 
 Route::controller(ChatbotController::class)->group(function () {
