@@ -1,10 +1,17 @@
 import AdminIndex from "@/components/karavan/place/admin-index/admin-index";
 import { index } from "@/routes/place";
+import type { Place } from "@/types/place";
 
-export default function Place() {
+interface PlaceProps {
+    places: Place[];
+}
+
+export default function Place({
+    places,
+}: PlaceProps) {
     return (
         <div className="p-4">
-            <AdminIndex />
+            <AdminIndex places={places} />
         </div>
     )
 }

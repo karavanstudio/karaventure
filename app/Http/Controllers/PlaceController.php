@@ -39,7 +39,16 @@ class PlaceController extends Controller
 
     // admin site
     public function index() {
-        return Inertia::render('admin/place');
+        $places = Place::with([
+            'category',
+            'placeImages',
+            'robloxImages',
+        ])
+        ->orderBy('id', 'desc')
+        ->get();
+        return Inertia::render('admin/place', [
+            'places' => $places,
+        ]);
     }
 
     public function create() {

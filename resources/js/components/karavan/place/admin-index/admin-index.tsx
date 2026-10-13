@@ -1,10 +1,18 @@
+import type { Place } from "@/types/place";
 import AdminHeader from "./admin-header";
+import PlacesCard from "./places-card";
 
-export default function AdminIndex() {
+interface AdminIndexProps {
+    places: Place[];
+}
+
+export default function AdminIndex({
+    places,
+}: AdminIndexProps) {
     return (
         <div className="flex flex-col gap-6">
             <AdminHeader />
-            <div>ini place</div>
+            <PlacesCard places={places} />
         </div>
     )
 }

@@ -16,6 +16,7 @@ class ExploreController extends Controller
             'placeImages',
             'robloxImages',
         ])
+        ->where('is_hidden', false)
         ->latest()
         ->get();
         $categories = Category::all();

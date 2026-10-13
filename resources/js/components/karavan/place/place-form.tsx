@@ -515,7 +515,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
                             className="size-4 rounded border-white/20 bg-black text-white focus:ring-white/10"
                         />
                         <span className="text-sm font-medium text-white">
-                            Hidden Gem
+                            Hide Place from Users
                         </span>
                     </label>
                 </div>
