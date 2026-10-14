@@ -236,4 +236,10 @@ class PlaceController extends Controller
 
         return redirect()->route('place.index')->with('success', 'Place berhasil diperbarui!');
     }
+
+    public function destroy(Place $place) {
+        $place->delete();
+
+        return redirect()->route('place.index')->with('success', 'Place berhasil dihapus!');
+    }
 }
