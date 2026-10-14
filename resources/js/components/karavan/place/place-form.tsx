@@ -3,9 +3,10 @@ import { Plus, Save, Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { uploadToGithub, deleteFromGithub } from '@/lib/github-upload';
-import { index, store } from '@/routes/place';
+import { index, store, update } from '@/routes/place';
 import type { Category } from '@/types/category';
 import type { Place } from '@/types/place';
+import { showSuccessToast, showErrorToast } from '@/lib/toast';
 
 interface ImageItem {
     url: string;
@@ -230,13 +231,27 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
             tags: formattedTags,
         };
 
+        const options = {
+            onSuccess: () => {
+                if (isEdit) {
+                    showSuccessToast('Success!', 'Place data successfully updated!');
+                } else {
+                    showSuccessToast('Success!', 'Place data successfully created!');
+                }
+            },
+            onError: (errors: Record<string, string>) => {
+                const errorMessage = Object.values(errors)[0] || 'Terjadi kesalahan saat menyimpan data.';
+                showErrorToast('Gagal Menyimpan', errorMessage);
+            },
+        };
+
         if (isEdit && place?.id) {
-            router.post(`/places/${place.id}`, {
+            router.post(update(place), {
                 _method: 'PUT',
                 ...payload,
-            });
+            }, options);
         } else {
-            router.post(store().url, payload);
+            router.post(store().url, payload, options);
         }
     };
 

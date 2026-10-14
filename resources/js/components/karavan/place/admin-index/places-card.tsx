@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import { Edit, Trash2, Star, MapPin, EyeOff, Flame, Sparkles } from "lucide-react";
+import { edit } from "@/routes/place";
 import type { Place } from "@/types/place";
-// import { edit, destroy } from "@/routes/place";
 
 interface PlacesCardProps {
     places: Place[];
@@ -85,7 +85,7 @@ export default function PlacesCard({
 
                                 {/* Tagline */}
                                 {place.tagline && (
-                                    <p className="line-clamp-1 text-xs italic text-zinc-400">
+                                    <p className="line-clamp-1 text-sm italic text-zinc-400">
                                         "{place.tagline}"
                                     </p>
                                 )}
@@ -118,7 +118,7 @@ export default function PlacesCard({
                         {/* Action Buttons */}
                         <div className="flex items-center border-t border-white/10 p-3 gap-2">
                             <Link
-                                href='#'
+                                href={edit(place)}
                                 className="
                                     flex flex-1 items-center justify-center gap-2
                                     rounded-md border border-white/20 bg-transparent
