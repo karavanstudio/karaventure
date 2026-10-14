@@ -6,7 +6,7 @@ export default function CreateHeader() {
                     Create Place
                 </h1>
                 <p className="text-muted-foreground">
-                    Add place to Karaventure website
+                    Add place on the Karaventure website
                 </p>
             </div>
         </div>

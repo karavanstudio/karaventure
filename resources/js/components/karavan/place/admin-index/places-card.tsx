@@ -1,7 +1,10 @@
-import { Link } from "@inertiajs/react";
-import { Edit, Trash2, Star, MapPin, EyeOff, Flame, Sparkles } from "lucide-react";
+import { Link, router } from "@inertiajs/react";
+import { Edit, Trash2, Star, MapPin, EyeOff, Flame, Sparkles, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { deleteFromGithub } from "@/lib/github-upload";
+import { edit, destroy } from "@/routes/place";
 import type { Place } from "@/types/place";
-// import { edit, destroy } from "@/routes/place";
+import { showSuccessToast } from "@/lib/toast";
 
 interface PlacesCardProps {
     places: Place[];
@@ -10,11 +13,39 @@ interface PlacesCardProps {
 export default function PlacesCard({
     places,
 }: PlacesCardProps) {
-    // const handleDelete = (id: number, name: string) => {
-    //     if (confirm(`Apakah Anda yakin ingin menghapus "${name}"?`)) {
-    //         router.delete(destroy({ place: id }).url);
-    //     }
-    // };
+    const [deletingId, setDeletingId] = useState<number | null>(null);
+    
+    const handleDelete = async (place: Place) => {
+        if (!confirm(`Are you sure you want to delete "${place.name}" and all its images?`)) {
+            return;
+        }
+
+        setDeletingId(place.id);
+
+        try {
+            const allImageUrls: string[] = [
+                ...(place.place_images?.map((img) => img.image) ?? []),
+                ...(place.roblox_images?.map((img) => img.image) ?? []),
+            ];
+
+            for (const url of allImageUrls) {
+                try {
+                    await deleteFromGithub(url);
+                } catch (err) {
+                    console.error(`Gagal menghapus gambar: ${url}`, err);
+                }
+            }
+
+            router.delete(destroy({ place: place.id }).url, {
+                onFinish: () => setDeletingId(null),
+                onSuccess: () => showSuccessToast('Success', 'Place deleted successfully!'),
+            });
+        } catch (error) {
+            console.error("Gagal menghapus gambar dari GitHub:", error);
+            alert("Terjadi kesalahan saat menghapus gambar dari GitHub.");
+            setDeletingId(null);
+        }
+    };
 
     if (!places || places.length === 0) {
         return (
@@ -28,6 +59,8 @@ export default function PlacesCard({
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {places.map((place) => {
                 const mainImage = place.place_images?.[0]?.image || "/placeholder.jpg";
+                const isDeletingThis = deletingId === place.id;
+                console.log(mainImage);
 
                 return (
                     <div
@@ -85,7 +118,7 @@ export default function PlacesCard({
 
                                 {/* Tagline */}
                                 {place.tagline && (
-                                    <p className="line-clamp-1 text-xs italic text-zinc-400">
+                                    <p className="line-clamp-1 text-sm italic text-zinc-400">
                                         "{place.tagline}"
                                     </p>
                                 )}
@@ -118,7 +151,7 @@ export default function PlacesCard({
                         {/* Action Buttons */}
                         <div className="flex items-center border-t border-white/10 p-3 gap-2">
                             <Link
-                                href='#'
+                                href={edit(place)}
                                 className="
                                     flex flex-1 items-center justify-center gap-2
                                     rounded-md border border-white/20 bg-transparent
@@ -132,7 +165,8 @@ export default function PlacesCard({
 
                             <button
                                 type="button"
-                                onClick={() => console.log('delete')}
+                                disabled={isDeletingThis}
+                                onClick={() => handleDelete(place)}
                                 className="
                                     flex items-center justify-center gap-2
                                     rounded-md border border-red-500/30 bg-red-500/10
@@ -141,8 +175,17 @@ export default function PlacesCard({
                                     cursor-pointer
                                 "
                             >
-                                <Trash2 className="size-3.5" />
-                                Delete
+                                {isDeletingThis ? (
+                                    <>
+                                        <Loader2 className="size-3.5 animate-spin" />
+                                        Deleting...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Trash2 className="size-3.5" />
+                                        Delete
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
