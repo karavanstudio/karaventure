@@ -16,13 +16,13 @@ const fileToBase64 = (file: File): Promise<string> => {
     });
 };
 
-export const getFileSha = async (filename: string): Promise<string | null> => {
+export const getFileSha = async (filename: string, token: string): Promise<string | null> => {
     try {
         const response = await fetch(
             `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filename}?ref=${BRANCH}`,
             {
                 headers: {
-                    Authorization: `Bearer ${GITHUB_TOKEN}`,
+                    Authorization: `Bearer ${token}`,
                     Accept: 'application/vnd.github.v3+json',
                 },
             }
@@ -30,7 +30,7 @@ export const getFileSha = async (filename: string): Promise<string | null> => {
 
         if (response.ok) {
             const data = await response.json();
-
+            
             return data.sha;
         }
 
@@ -40,16 +40,16 @@ export const getFileSha = async (filename: string): Promise<string | null> => {
     }
 };
 
-export const uploadToGithub = async (file: File, filename: string): Promise<string> => {
+export const uploadToGithub = async (file: File, filename: string, token: string): Promise<string> => {
     const base64Content = await fileToBase64(file);
-    const existingSha = await getFileSha(filename);
+    const existingSha = await getFileSha(filename, token);
 
     const response = await fetch(
         `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filename}`,
         {
             method: 'PUT',
             headers: {
-                Authorization: `Bearer ${GITHUB_TOKEN}`,
+                Authorization: `Bearer ${token}`,
                 Accept: 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
@@ -71,14 +71,14 @@ export const uploadToGithub = async (file: File, filename: string): Promise<stri
     return `https://cdn.jsdelivr.net/gh/${REPO_OWNER}/${REPO_NAME}@${BRANCH}/${filename}`;
 };
 
-export const deleteFromGithub = async (fileUrlOrName: string): Promise<boolean> => {
+export const deleteFromGithub = async (fileUrlOrName: string, token: string): Promise<boolean> => {
     const filename = fileUrlOrName.split('/').pop();
 
     if (!filename) {
         return false;
     }
 
-    const sha = await getFileSha(filename);
+    const sha = await getFileSha(filename, token);
 
     if (!sha) {
         return true;

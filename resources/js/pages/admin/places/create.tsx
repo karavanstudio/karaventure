@@ -4,13 +4,15 @@ import type { Category } from "@/types/category";
 
 interface PlaceCreateProps {
     categories: Category[];
+    githubToken: string;
 }
 
 export default function PlaceCreate({
     categories,
+    githubToken,
 }: PlaceCreateProps) {
     return (
-        <CreateIndex categories={categories} />
+        <CreateIndex categories={categories} githubToken={githubToken} />
     )
 }
 

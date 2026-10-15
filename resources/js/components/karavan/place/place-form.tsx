@@ -3,10 +3,10 @@ import { Plus, Save, Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { uploadToGithub, deleteFromGithub } from '@/lib/github-upload';
+import { showSuccessToast, showErrorToast } from '@/lib/toast';
 import { index, store, update } from '@/routes/place';
 import type { Category } from '@/types/category';
 import type { Place } from '@/types/place';
-import { showSuccessToast, showErrorToast } from '@/lib/toast';
 
 interface ImageItem {
     url: string;
@@ -17,10 +17,10 @@ interface ImageItem {
 interface PlaceFormProps {
     categories: Category[];
     place?: Place;
+    githubToken: string;
 }
 
-export default function PlaceForm({ categories, place }: PlaceFormProps) {
-    console.log(categories);
+export default function PlaceForm({ categories, place, githubToken }: PlaceFormProps) {
     const isEdit = Boolean(place);
 
     const { data, setData, processing, errors } = useForm({
@@ -101,7 +101,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
 
         try {
             const filename = generateFilename(data.name, '', file);
-            const cdnUrl = await uploadToGithub(file, filename);
+            const cdnUrl = await uploadToGithub(file, filename, githubToken);
             setMainImage({ url: cdnUrl, previewUrl, isUploading: false });
             setData('main_image', cdnUrl);
         } catch (err) {
@@ -134,7 +134,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
             const filename = generateFilename(data.name, suffix, file);
 
             try {
-                const cdnUrl = await uploadToGithub(file, filename);
+                const cdnUrl = await uploadToGithub(file, filename, githubToken);
                 uploadedUrls.push(cdnUrl);
 
                 setGalleryImages((prev) =>
@@ -172,7 +172,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
 
         try {
             const filename = generateFilename(data.name, '-roblox', file);
-            const cdnUrl = await uploadToGithub(file, filename);
+            const cdnUrl = await uploadToGithub(file, filename, githubToken);
             setRobloxImage({ url: cdnUrl, previewUrl, isUploading: false });
             setData('roblox_image', cdnUrl);
         } catch (err) {
@@ -184,7 +184,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
 
     const handleDeleteMainImage = async () => {
         if (mainImage?.url) {
-            await deleteFromGithub(mainImage.url);
+            await deleteFromGithub(mainImage.url, githubToken);
         }
 
         setMainImage(null);
@@ -195,7 +195,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
         const target = galleryImages[index];
 
         if (target?.url) {
-            await deleteFromGithub(target.url);
+            await deleteFromGithub(target.url, githubToken);
         }
 
         const updated = galleryImages.filter((_, i) => i !== index);
@@ -208,7 +208,7 @@ export default function PlaceForm({ categories, place }: PlaceFormProps) {
 
     const handleDeleteRobloxImage = async () => {
         if (robloxImage?.url) {
-            await deleteFromGithub(robloxImage.url);
+            await deleteFromGithub(robloxImage.url, githubToken);
         }
 
         setRobloxImage(null);
