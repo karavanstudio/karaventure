@@ -56,6 +56,7 @@ class PlaceController extends Controller
 
         return Inertia::render('admin/places/create', [
             'categories' => $categories,
+            'githubToken' => config('services.github.token', env('GITHUB_TOKEN')),
         ]);
     }
 
@@ -148,6 +149,7 @@ class PlaceController extends Controller
         return Inertia::render('admin/places/edit', [
             'place' => $place,
             'categories' => $categories,
+            'githubToken' => config('services.github.token', env('GITHUB_TOKEN')),
         ]);
     }
 

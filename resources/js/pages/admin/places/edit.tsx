@@ -6,16 +6,19 @@ import type { Place } from "@/types/place";
 interface PlaceEditProps {
     place: Place;
     categories: Category[];
+    githubToken: string;
 }
 
 export default function PlaceEdit({
     place,
     categories,
+    githubToken
 }: PlaceEditProps) {
     return (
         <EditIndex
             place={place}
             categories={categories}
+            githubToken={githubToken}
         />
     )
 }
