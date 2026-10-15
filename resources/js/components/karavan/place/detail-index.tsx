@@ -94,7 +94,7 @@ export default function DetailIndex({
                         <h2 className="text-xl md:text-3xl font-semibold">Tentang Tempat Ini</h2>
                         <p className="text-muted-foreground text-base">{place.description}</p>
                         {place.tags.length != 0 && (
-                            <div className="flex items-center gap-4 mt-8">
+                            <div className="flex flex-wrap items-center gap-4 mt-8">
                                 {place.tags.map((tag) => (
                                     <div className="rounded-full px-4 py-1 bg-gray-900 border border-white/20 cursor-default whitespace-nowrap">
                                         {tag}
