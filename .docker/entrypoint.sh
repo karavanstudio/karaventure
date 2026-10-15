@@ -58,7 +58,7 @@ sqlite3 /var/www/html/database/database.sqlite "PRAGMA busy_timeout=30000;"
 echo "⚙️ Running Laravel setup..."
 
 # Run migrations
-php artisan migrate --force
+# php artisan migrate --force
 
 php artisan config:clear || true
 php artisan cache:clear || true
@@ -66,12 +66,12 @@ php artisan route:clear || true
 php artisan view:clear || true
 
 # Seed essential data on first run only
-if [ ! -f /var/www/html/storage/.seeded ]; then
-    php artisan db:seed --force
+# if [ ! -f /var/www/html/storage/.seeded ]; then
+#     php artisan db:seed --force
 
-    touch /var/www/html/storage/.seeded
-    echo "Essential data seeded successfully!"
-fi
+#     touch /var/www/html/storage/.seeded
+#     echo "Essential data seeded successfully!"
+# fi
 
 # Optimize
 php artisan optimize
