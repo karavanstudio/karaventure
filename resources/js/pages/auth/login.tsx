@@ -24,7 +24,7 @@ export default function Login({
 }: Props) {
     return (
         <>
-            <Head title="Log in" />
+            <Head title="Login" />
 
             <Form
                 {...store.form()}
@@ -116,6 +116,6 @@ export default function Login({
 }
 
 Login.layout = {
-    title: 'Log in to your account',
+    title: 'Login to your account',
     description: 'Enter your email and password below to log in',
 };
