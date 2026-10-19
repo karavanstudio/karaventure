@@ -23,7 +23,7 @@ export default function MessageSection() {
         "Apa itu Karaventure?",
         "Tempat makan keluarga?",
         "Hidden Gems di karawang?",
-        // "Bagaimana cara mengaktifkan status mangkal?",
+        "Tempat yang lagi trending di karawang?",
         // "Bagaimana cara mengunggah foto toko?",
     ];
 
@@ -101,7 +101,7 @@ export default function MessageSection() {
                                 />
                             </div>
                             <h1 className="text-center text-4xl font-bold">
-                                Asisten Karavan
+                                Asisten Karaventure
                             </h1>
                             <p className="mt-3max-w-xl text-center text-zinc-400">
                                 Tanyakan apa saja tentang penggunaan aplikasi Explore Karawang atau fitur lainnya.

@@ -8,10 +8,12 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAnalyticsTracker } from "@/hooks/use-analytics-tracker";
 import { chatbot } from "@/routes";
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
-    const isChatbotPage = typeof window !== "undefined" && window.location.pathname === chatbot().url
+    const isChatbotPage = typeof window !== "undefined" && window.location.pathname === chatbot().url;
+    useAnalyticsTracker();
 
     return (
         <div className="relative isolate w-full overflow-x-hidden">
