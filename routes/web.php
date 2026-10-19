@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\HomeController;
@@ -19,7 +20,7 @@ Route::get('/about', function() {
 })->name('about');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', [AnalyticController::class, 'dashboard'])->name('dashboard');
 
     Route::prefix('admin')->group(function() {
         Route::controller(PlaceController::class)->group(function() {
@@ -47,3 +48,4 @@ Route::controller(PlaceController::class)->group(function () {
 });
 
 require __DIR__.'/settings.php';
+require __DIR__.'/api.php';

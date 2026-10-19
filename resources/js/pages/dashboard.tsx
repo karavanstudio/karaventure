@@ -1,26 +1,36 @@
 import { Head } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import DashboardIndex from '@/components/karavan/dashboard/dashboard-index';
 import { dashboard } from '@/routes';
 
-export default function Dashboard() {
+export interface AnalyticItem {
+    id: number;
+    place_id: number | null;
+    type: 'page_view' | 'place_click';
+    created_at: string;
+    place?: {
+        id: number;
+        name: string;
+    } | null;
+}
+
+interface DashboardProps {
+    rawAnalytics: AnalyticItem[];
+    summary: {
+        total_page_views: number;
+        total_place_clicks: number;
+        unique_visitors: number;
+    };
+}
+
+export default function Dashboard({
+    rawAnalytics,
+    summary,
+}: DashboardProps) {
     return (
         <>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+            <div className="p-4">
+                <DashboardIndex rawAnalytics={rawAnalytics} summary={summary} />
             </div>
         </>
     );

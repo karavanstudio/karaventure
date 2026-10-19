@@ -2,6 +2,7 @@
 
 namespace App\Models\Place;
 
+use App\Models\Analytic;
 use App\Models\Category;
 
 use Illuminate\Support\Str;
@@ -64,5 +65,9 @@ class Place extends Model
 
     public function robloxImages() {
         return $this->hasMany(RobloxImage::class, 'place_id');
+    }
+
+    public function analytics() {
+        return $this->hasMany(Analytic::class, 'place_id');
     }
 }

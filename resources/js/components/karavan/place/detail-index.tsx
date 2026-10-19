@@ -95,8 +95,11 @@ export default function DetailIndex({
                         <p className="text-muted-foreground text-base">{place.description}</p>
                         {place.tags.length != 0 && (
                             <div className="flex flex-wrap items-center gap-4 mt-8">
-                                {place.tags.map((tag) => (
-                                    <div className="rounded-full px-4 py-1 bg-gray-900 border border-white/20 cursor-default whitespace-nowrap">
+                                {place.tags.map((tag, index) => (
+                                    <div
+                                        className="rounded-full px-4 py-1 bg-gray-900 border border-white/20 cursor-default whitespace-nowrap"
+                                        key={`tag-${index}`}
+                                    >
                                         {tag}
                                     </div>
                                 ))}
@@ -223,8 +226,9 @@ export default function DetailIndex({
                         </div>
                     </div>
                     {relatedPlaces.length != 0 && 
-                        relatedPlaces.map((item) => (
+                        relatedPlaces.map((item, index) => (
                             <div
+                                key={item.id ?? `related-${index}`}
                                 onClick={() => router.visit(placeRoute(item.id))}
                                 className="
                                     group box-content relative
