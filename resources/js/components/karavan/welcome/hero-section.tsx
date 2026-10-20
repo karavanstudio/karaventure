@@ -44,7 +44,7 @@ export default function HeroSection() {
                 </div>
                 <div className="flex justify-center lg:justify-start mt-8 gap-4 md:gap-8">
                     <Link
-                        href={explore()}
+                        href="https://www.roblox.com/games/106041739530903/Karaventure"
                         className="
                             group
                             flex items-center justify-center gap-2
