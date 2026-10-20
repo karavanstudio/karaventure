@@ -23,7 +23,7 @@ export default function CtaSection() {
                             <ChevronRight className="h-5 w-5" />
                         </a>
                         <a
-                            href="https://www.roblox.com/"
+                            href="https://www.roblox.com/games/106041739530903/Karaventure"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2.5 rounded-full border-2 border-[#ffd02b] bg-[#ffd02b]/5 px-8 py-4 text-base md:text-lg font-semibold text-[#f5f5f2] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#ffd02b]/15"
